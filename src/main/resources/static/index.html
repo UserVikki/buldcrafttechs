@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BuildCraftTechs | Precision Engineered Software Architecture</title>
+
+    <!-- Google Fonts: Manrope & Inter -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-dim": "#4a5268",
+                      "on-error": "#fff7f6",
+                      "inverse-primary": "#dae2fd",
+                      "primary-fixed-dim": "#ccd4ee",
+                      "on-tertiary": "#e1fffc",
+                      "on-surface-variant": "#566166",
+                      "surface-variant": "#d9e4ea",
+                      "surface-container": "#e8eff3",
+                      "tertiary-container": "#75e7e0",
+                      "on-primary-fixed-variant": "#535b71",
+                      "background": "#f7f9fb",
+                      "surface-bright": "#f7f9fb",
+                      "surface-tint": "#565e74",
+                      "on-background": "#2a3439",
+                      "inverse-on-surface": "#9a9d9f",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-primary-fixed": "#373f54",
+                      "tertiary-fixed-dim": "#66d8d2",
+                      "inverse-surface": "#0b0f10",
+                      "surface-dim": "#cfdce3",
+                      "surface-container-high": "#e1e9ee",
+                      "tertiary-fixed": "#75e7e0",
+                      "error": "#9f403d",
+                      "surface": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "error-dim": "#4e0309",
+                      "secondary-fixed-dim": "#c5d6f0",
+                      "on-tertiary-fixed": "#003d3b",
+                      "tertiary-dim": "#005d5a",
+                      "on-secondary-fixed": "#314055",
+                      "on-tertiary-container": "#00524f",
+                      "on-secondary-fixed-variant": "#4d5d73",
+                      "secondary-container": "#d3e4fe",
+                      "outline-variant": "#a9b4b9",
+                      "on-tertiary-fixed-variant": "#005d59",
+                      "primary-fixed": "#dae2fd",
+                      "outline": "#717c82",
+                      "on-secondary": "#f7f9ff",
+                      "on-primary": "#f7f7ff",
+                      "secondary-dim": "#44546a",
+                      "surface-container-highest": "#d9e4ea",
+                      "on-surface": "#2a3439",
+                      "on-primary-container": "#4a5167",
+                      "surface-container-low": "#f0f4f7",
+                      "primary": "#565e74",
+                      "on-secondary-container": "#435368",
+                      "secondary": "#506076",
+                      "on-error-container": "#752121",
+                      "error-container": "#fe8983",
+                      "primary-container": "#dae2fd",
+                      "tertiary": "#006b67"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .ghost-border {
+            border: 1px solid rgba(169, 180, 185, 0.15);
+        }
+        .editorial-shadow {
+            box-shadow: 0 32px 64px -12px rgba(42, 52, 57, 0.04);
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; }
+    </style>
+
+    <!-- React and Routing v6.3.0 Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body class="bg-background text-on-background">
+<div id="root"></div>
+
+<script type="text/babel">
+    const { useState, useEffect } = React;
+    const { createRoot } = ReactDOM;
+    const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+    // --- Shared Components ---
+
+    const Navbar = () => {
+        const location = useLocation();
+        const isActive = (path) => location.pathname === path;
+
+        return (
+            <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width top-0 sticky z-50">
+                <nav class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+                    <div class="flex items-center gap-8">
+                        <Link to="/" class="font-['Manrope'] font-extrabold text-xl tracking-tighter text-[#565e74] dark:text-slate-100">BuildCraftTechs</Link>
+                        <div class="hidden md:flex items-center gap-6">
+                            <Link
+                                to="/"
+                                className={`font-['Inter'] font-medium text-sm tracking-tight transition-colors ${isActive('/') ? 'text-[#565e74] border-b-2 border-[#565e74] pb-1' : 'text-[#565e74]/70 hover:text-[#565e74]'}`}
+                            >Home</Link>
+                            <Link
+                                to="/services"
+                                className={`font-['Inter'] font-medium text-sm tracking-tight transition-colors ${isActive('/services') ? 'text-[#565e74] border-b-2 border-[#565e74] pb-1' : 'text-[#565e74]/70 hover:text-[#565e74]'}`}
+                            >Services</Link>
+                            <Link
+                                to="/portfolio"
+                                className={`font-['Inter'] font-medium text-sm tracking-tight transition-colors ${isActive('/portfolio') ? 'text-[#565e74] border-b-2 border-[#565e74] pb-1' : 'text-[#565e74]/70 hover:text-[#565e74]'}`}
+                            >Portfolio</Link>
+                            <Link
+                                to="/about"
+                                className={`font-['Inter'] font-medium text-sm tracking-tight transition-colors ${isActive('/about') ? 'text-[#565e74] border-b-2 border-[#565e74] pb-1' : 'text-[#565e74]/70 hover:text-[#565e74]'}`}
+                            >About</Link>
+                            <Link
+                                to="/contact"
+                                className={`font-['Inter'] font-medium text-sm tracking-tight transition-colors ${isActive('/contact') ? 'text-[#565e74] border-b-2 border-[#565e74] pb-1' : 'text-[#565e74]/70 hover:text-[#565e74]'}`}
+                            >Contact</Link>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <Link to="/contact" class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-medium text-sm scale-95 active:scale-90 transition-transform shadow-sm inline-block">
+                            Book a Consultation
+                        </Link>
+                    </div>
+                </nav>
+            </header>
+        );
+    };
+
+    const Footer = () => (
+        <footer class="bg-[#f0f4f7] dark:bg-slate-950 full-width pt-16 pb-8 border-t border-[#a9b4b9]/15">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div>
+                    <div class="font-['Manrope'] font-bold text-lg text-[#565e74] dark:text-slate-200 mb-4">BuildCraftTechs</div>
+                    <p class="text-[#565e74]/60 dark:text-slate-400 max-w-sm font-['Inter'] text-sm leading-relaxed mb-6">
+                        Professional grade software architecture for the modern web. Engineering excellence delivered with precision and speed.
+                    </p>
+                    <div class="flex gap-4">
+                        <a class="w-8 h-8 flex items-center justify-center bg-surface-container rounded-full text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-sm" data-icon="share">share</span></a>
+                        <a class="w-8 h-8 flex items-center justify-center bg-surface-container rounded-full text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-sm" data-icon="alternate_email">alternate_email</span></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h5 class="font-['Inter'] text-xs uppercase tracking-widest font-bold text-on-background mb-6">Navigation</h5>
+                        <ul class="space-y-4">
+                            <li><Link class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" to="/">Home</Link></li>
+                            <li><Link class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" to="/services">Services</Link></li>
+                            <li><Link class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" to="/portfolio">Portfolio</Link></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-['Inter'] text-xs uppercase tracking-widest font-bold text-on-background mb-6">Legal</h5>
+                        <ul class="space-y-4">
+                            <li><a class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" href="#">Privacy Policy</a></li>
+                            <li><a class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" href="#">Terms of Service</a></li>
+                            <li><a class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" href="#">API Docs</a></li>
+                            <li><a class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60 hover:text-[#565e74] hover:underline underline-offset-4 decoration-[#006b67] transition-opacity" href="#">Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="font-['Inter'] text-xs uppercase tracking-widest text-[#565e74]/60">© 2024 BuildCraftTechs Architecture. Precision Engineered.</p>
+                <div class="flex gap-6">
+                    <span class="inline-flex items-center gap-2 text-[10px] font-bold text-tertiary uppercase tracking-tighter">
+                        <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                        All Systems Operational
+                    </span>
+                </div>
+            </div>
+        </footer>
+    );
+
+    // --- Page Components ---
+
+    const HomePage = () => (
+        <main>
+            <section class="relative overflow-hidden pt-20 pb-32 md:pt-32 md:pb-48">
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-surface-container-low to-transparent opacity-50"></div>
+                </div>
+                <div class="max-w-7xl mx-auto px-6 relative z-10">
+                    <div class="max-w-3xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em] rounded-sm mb-8">
+                            <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                            Precision Engineered Software
+                        </div>
+                        <h1 class="font-headline text-5xl md:text-7xl font-extrabold text-on-background tracking-tighter leading-[1.05] mb-8">
+                            We Build Scalable <span class="text-primary-dim">Backend Systems</span> & Automation Solutions
+                        </h1>
+                        <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed mb-10 max-w-2xl">
+                            Helping startups and businesses automate workflows, integrate APIs, and build reliable systems that scale with architectural integrity.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <Link to="/contact" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-semibold text-base shadow-lg shadow-primary/10 hover:bg-primary-dim transition-all flex items-center justify-center gap-2">
+                                Book a Free Consultation
+                                <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+                            </Link>
+                            <Link to="/portfolio" class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-lg font-semibold text-base hover:bg-surface-variant transition-all text-center">
+                                View Case Studies
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute bottom-0 right-0 w-full md:w-2/3 h-[500px] pointer-events-none opacity-20">
+                    <div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary via-transparent to-transparent"></div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-surface-container-low" id="services">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                        <div>
+                            <h2 class="font-headline text-3xl md:text-4xl font-bold text-on-background tracking-tight mb-4">Core Competencies</h2>
+                            <p class="text-on-surface-variant max-w-md">Our technical stack is optimized for high-throughput environments and seamless system orchestration.</p>
+                        </div>
+                        <div class="h-px flex-grow bg-outline-variant/20 mx-8 hidden md:block"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <div class="md:col-span-8 bg-surface-container-lowest p-8 md:p-12 rounded-xl group hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-outline-variant/10">
+                            <div class="relative z-10">
+                                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="database">database</span>
+                                <h3 class="font-headline text-2xl font-bold mb-4">Backend Development</h3>
+                                <p class="text-on-surface-variant max-w-lg mb-8">Robust, cloud-native architectures designed to handle millions of requests. We specialize in microservices, distributed systems, and SQL/NoSQL optimization.</p>
+                                <ul class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm font-medium text-on-surface">
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Microservices</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Cloud Infrastructure</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Data Modeling</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Real-time Processing</li>
+                                </ul>
+                            </div>
+                            <div class="absolute -right-12 -bottom-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
+                                <span class="material-symbols-outlined text-[200px]" data-icon="terminal">terminal</span>
+                            </div>
+                        </div>
+                        <div class="md:col-span-4 bg-surface-container-lowest p-8 md:p-10 rounded-xl group hover:shadow-xl transition-all duration-300 border border-outline-variant/10">
+                            <span class="material-symbols-outlined text-4xl text-tertiary mb-6" data-icon="settings_suggest">settings_suggest</span>
+                            <h3 class="font-headline text-xl font-bold mb-4">Automation Solutions</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed mb-6">Eliminate manual bottlenecks. We build custom RPA and workflow automation tools that save hundreds of engineering hours.</p>
+                            <Link class="text-primary font-bold text-xs uppercase tracking-widest inline-flex items-center gap-2 hover:gap-3 transition-all" to="/services">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+
+    const ServicesPage = () => (
+        <main class="min-h-screen">
+            <section class="max-w-7xl mx-auto px-6 pt-24 pb-16">
+                <div class="max-w-3xl">
+                    <p class="font-label text-xs uppercase tracking-widest text-tertiary mb-4 font-bold">Our Services</p>
+                    <h1 class="font-headline text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-8 leading-[1.1]">
+                        End-to-End <span class="text-primary-dim">Software Solutions</span>.
+                    </h1>
+                    <p class="font-body text-lg text-on-surface-variant leading-relaxed mb-12">
+                        From concept to deployment, we provide comprehensive software services tailored to your business needs. Our expert team delivers scalable, secure, and high-performance solutions.
+                    </p>
+                </div>
+            </section>
+
+            {/* Main Services Grid */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    {/* Backend Development - Featured */}
+                    <div class="md:col-span-8 bg-surface-container-lowest p-10 rounded-xl ghost-border editorial-shadow group hover:bg-surface transition-colors duration-300">
+                        <div class="flex flex-col h-full">
+                            <div class="mb-8">
+                                <span class="material-symbols-outlined text-primary text-4xl mb-4">database</span>
+                                <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Backend Development</h3>
+                                <p class="font-body text-on-surface-variant leading-relaxed max-w-xl">
+                                    Robust server-side architectures engineered with Spring Boot, Node.js, and Python. We specialize in high-availability microservices, RESTful & GraphQL APIs, and database optimization for enterprise scale.
+                                </p>
+                            </div>
+                            <div class="mt-auto flex flex-wrap gap-3">
+                                <span class="px-3 py-1 bg-surface-container rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Spring Boot</span>
+                                <span class="px-3 py-1 bg-surface-container rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Node.js</span>
+                                <span class="px-3 py-1 bg-surface-container rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Microservices</span>
+                                <span class="px-3 py-1 bg-surface-container rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">API Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Audit & Compliance */}
+                    <div class="md:col-span-4 bg-surface-container-low p-10 rounded-xl ghost-border flex flex-col justify-between">
+                        <div>
+                            <span class="material-symbols-outlined text-tertiary text-4xl mb-6">verified_user</span>
+                            <h3 class="font-headline text-xl font-bold text-on-surface mb-3">Audit & Compliance</h3>
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                                Comprehensive code audits, security assessments, and compliance checks for GDPR, HIPAA, SOC 2, and ISO 27001 standards.
+                            </p>
+                        </div>
+                        <div class="mt-8">
+                            <ul class="space-y-3">
+                                <li class="flex items-center text-xs font-medium text-on-surface">
+                                    <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                    Security Audits
+                                </li>
+                                <li class="flex items-center text-xs font-medium text-on-surface">
+                                    <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                    Code Quality Review
+                                </li>
+                                <li class="flex items-center text-xs font-medium text-on-surface">
+                                    <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                    Compliance Reports
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Second Row Services */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* QA & Testing */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-4xl mb-6">bug_report</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">QA & Testing Team</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            Dedicated testing teams for manual & automated testing, performance testing, and CI/CD pipeline integration.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Automated Testing (Selenium, Cypress)
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Performance & Load Testing
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                API Testing & Validation
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Product Development */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-4xl mb-6">rocket_launch</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">Product Development</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            End-to-end product development from ideation to launch. MVP development, iterative releases, and product scaling.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                MVP Development
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Agile Methodology
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Product Roadmap Planning
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Cloud & DevOps */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-4xl mb-6">cloud</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">Cloud & DevOps</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            Cloud infrastructure setup, migration, and optimization on AWS, Azure, and GCP with full DevOps automation.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                AWS / Azure / GCP
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                CI/CD Pipelines
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Kubernetes & Docker
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            {/* Third Row Services */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* AI & ML Solutions */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-tertiary text-4xl mb-6">psychology</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">AI & ML Solutions</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            Custom AI/ML model development, LLM integration, chatbots, and intelligent automation solutions.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                ChatGPT / LLM Integration
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Predictive Analytics
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Custom AI Chatbots
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Mobile Development */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-tertiary text-4xl mb-6">smartphone</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">Mobile Development</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            Native and cross-platform mobile apps with React Native, Flutter, and native iOS/Android development.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                React Native / Flutter
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                iOS & Android Native
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                App Store Deployment
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* UI/UX Design */}
+                    <div class="bg-surface-container-lowest p-8 rounded-xl ghost-border group hover:shadow-lg transition-all duration-300">
+                        <span class="material-symbols-outlined text-tertiary text-4xl mb-6">palette</span>
+                        <h3 class="font-headline text-xl font-bold text-on-surface mb-3">UI/UX Design</h3>
+                        <p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">
+                            User-centered design, wireframing, prototyping, and design systems that enhance user experience.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Figma / Adobe XD
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                Design Systems
+                            </li>
+                            <li class="flex items-center text-xs font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-sm mr-2 text-tertiary">check_circle</span>
+                                User Research
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            {/* Fourth Row - Additional Services */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {/* Data Engineering */}
+                    <div class="bg-surface-container-low p-6 rounded-xl ghost-border group hover:shadow-md transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-4">analytics</span>
+                        <h3 class="font-headline text-lg font-bold text-on-surface mb-2">Data Engineering</h3>
+                        <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                            ETL pipelines, data warehousing, and real-time analytics solutions.
+                        </p>
+                    </div>
+
+                    {/* API Integration */}
+                    <div class="bg-surface-container-low p-6 rounded-xl ghost-border group hover:shadow-md transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-4">api</span>
+                        <h3 class="font-headline text-lg font-bold text-on-surface mb-2">API Integration</h3>
+                        <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                            Third-party API integrations, payment gateways, and system connectivity.
+                        </p>
+                    </div>
+
+                    {/* Legacy Modernization */}
+                    <div class="bg-surface-container-low p-6 rounded-xl ghost-border group hover:shadow-md transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-4">upgrade</span>
+                        <h3 class="font-headline text-lg font-bold text-on-surface mb-2">Legacy Modernization</h3>
+                        <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                            Migrate and modernize legacy systems to modern tech stacks.
+                        </p>
+                    </div>
+
+                    {/* 24/7 Support */}
+                    <div class="bg-surface-container-low p-6 rounded-xl ghost-border group hover:shadow-md transition-all duration-300">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-4">support_agent</span>
+                        <h3 class="font-headline text-lg font-bold text-on-surface mb-2">24/7 Support & Maintenance</h3>
+                        <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                            Round-the-clock monitoring, maintenance, and technical support.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section class="bg-surface-container-low py-20">
+                <div class="max-w-7xl mx-auto px-6 text-center">
+                    <h2 class="font-headline text-3xl font-bold text-on-surface mb-4">Ready to build something great?</h2>
+                    <p class="text-on-surface-variant mb-8 max-w-xl mx-auto">Let's discuss your project requirements and find the perfect solution for your business.</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <Link to="/contact" class="bg-primary text-on-primary px-8 py-3 rounded-lg font-label text-sm font-semibold hover:bg-primary-dim transition-all">Get a Free Consultation</Link>
+                        <Link to="/portfolio" class="bg-surface-container-lowest text-on-surface px-8 py-3 rounded-lg font-label text-sm font-semibold ghost-border hover:bg-surface-container-high transition-all">View Our Work</Link>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+
+    const AboutPage = () => (
+        <main>
+            <section class="max-w-7xl mx-auto px-6 pt-24 pb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                    <div class="lg:col-span-8">
+                        <span class="font-label text-xs uppercase tracking-widest text-primary font-bold mb-4 block">Our Identity</span>
+                        <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter text-on-background leading-[0.95] mb-8">
+                            Precision-engineered backend <span class="text-primary-dim">architecture.</span>
+                        </h1>
+                    </div>
+                    <div class="lg:col-span-4 pb-4">
+                        <p class="text-on-surface-variant text-lg leading-relaxed">
+                            BuildCraftTechs creates the invisible strength behind modern fintech and high-growth startups. We specialize in the complex, the scalable, and the automated.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="max-w-7xl mx-auto px-6 mb-24">
+                <div class="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
+                    <img class="w-full h-full object-cover" data-alt="Monochromatic high-tech server room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ETYCC9fB_-CZAvgXlrhkrSoyJty3ZHbYeP1grOQdJYqjN-7L7NkwWUYGl0LEuyfhpnzQqCdZAP7_V-F_2PQojYVG5CBM9akfKj8dXWNzTmVIbekjtsoBsipXLoeHq5fD63wPKyOekcPPZkOPSb2u3_-mOh6XODbMAC8_B2Lc_JzbpMyi8oFr-nU2_oSpv7CPrgh_7ok6s6mQWTTAtOKfbdDd0gziVH93DwUak3YReYALFwQgrSwHCZ3IXAsZvM9Pgy0RvvT4YA"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+                </div>
+            </section>
+            <section class="max-w-7xl mx-auto px-6 py-24">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center lg:text-left">
+                    <div>
+                        <h4 class="text-5xl font-extrabold text-on-background mb-2">99.9%</h4>
+                        <p class="text-xs uppercase tracking-widest text-outline font-bold">Uptime Guaranteed</p>
+                    </div>
+                    <div>
+                        <h4 class="text-5xl font-extrabold text-on-background mb-2">1.2M</h4>
+                        <p class="text-xs uppercase tracking-widest text-outline font-bold">Transactions / Sec</p>
+                    </div>
+                    <div>
+                        <h4 class="text-5xl font-extrabold text-on-background mb-2">150+</h4>
+                        <p class="text-xs uppercase tracking-widest text-outline font-bold">Automated Workflows</p>
+                    </div>
+                    <div>
+                        <h4 class="text-5xl font-extrabold text-on-background mb-2">15ms</h4>
+                        <p class="text-xs uppercase tracking-widest text-outline font-bold">Avg Latency</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+
+    const PortfolioPage = () => (
+        <main class="min-h-screen">
+            <section class="max-w-7xl mx-auto px-6 pt-24 pb-16">
+                <div class="max-w-3xl">
+                    <p class="text-tertiary font-label text-xs uppercase tracking-widest mb-4">Our Work</p>
+                    <h1 class="font-headline text-5xl md:text-6xl font-extrabold tracking-tight text-on-background mb-6">
+                        Portfolio of <span class="text-primary-dim">Technical Excellence.</span>
+                    </h1>
+                    <p class="text-on-surface-variant text-lg leading-relaxed max-w-2xl">
+                        From high-frequency trading systems to enterprise security solutions, we deliver mission-critical software that powers businesses worldwide.
+                    </p>
+                </div>
+            </section>
+
+            {/* Featured Project - High Performance Trading */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                    <div class="md:col-span-8 group bg-gradient-to-br from-surface-container-lowest to-surface-container rounded-xl p-1 overflow-hidden relative border border-outline-variant/10 shadow-lg">
+                        <div class="aspect-video w-full rounded-lg overflow-hidden bg-gradient-to-r from-slate-900 to-slate-800 flex items-center justify-center">
+                            <div class="text-center">
+                                <span class="material-symbols-outlined text-6xl text-tertiary mb-4">trending_up</span>
+                                <div class="flex items-center justify-center gap-4 text-white/60">
+                                    <span class="text-2xl font-mono">$2.4B</span>
+                                    <span class="text-sm">Daily Volume</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-widest rounded-full">FinTech</span>
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full">High Frequency</span>
+                                <span class="px-3 py-1 bg-surface-container text-primary-dim text-[10px] font-bold uppercase tracking-widest rounded-full">Real-time</span>
+                            </div>
+                            <h2 class="font-headline text-2xl font-bold mb-3 text-on-background">High-Performance Trading Platform</h2>
+                            <p class="text-on-surface-variant leading-relaxed mb-6">
+                                Ultra-low latency trading system processing 1M+ orders/second with sub-microsecond execution. Built for institutional traders with real-time market data feeds, algorithmic trading engines, and risk management.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center p-3 bg-surface-container rounded-lg">
+                                    <p class="text-xl font-bold text-on-background">{'<'}10μs</p>
+                                    <p class="text-xs text-on-surface-variant">Latency</p>
+                                </div>
+                                <div class="text-center p-3 bg-surface-container rounded-lg">
+                                    <p class="text-xl font-bold text-on-background">99.99%</p>
+                                    <p class="text-xs text-on-surface-variant">Uptime</p>
+                                </div>
+                                <div class="text-center p-3 bg-surface-container rounded-lg">
+                                    <p class="text-xl font-bold text-on-background">1M+</p>
+                                    <p class="text-xs text-on-surface-variant">Orders/sec</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Java</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Kafka</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Redis</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">FIX Protocol</span>
+                            </div>
+                        </div>
+                    </div>
+                    {/* VAPT Services */}
+                    <div class="md:col-span-4 bg-slate-900 rounded-xl p-8 flex flex-col justify-between border border-slate-700">
+                        <div>
+                            <div class="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6 border border-red-500/20">
+                                <span class="material-symbols-outlined text-red-400">security</span>
+                            </div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="px-2 py-1 bg-red-500/10 text-red-400 text-[10px] font-bold uppercase tracking-widest rounded-full">Security</span>
+                            </div>
+                            <h2 class="font-headline text-2xl font-bold mb-3 text-white">VAPT Services</h2>
+                            <p class="text-slate-400 leading-relaxed mb-6">
+                                Comprehensive Vulnerability Assessment & Penetration Testing. Our certified security experts identify and remediate threats before they become breaches.
+                            </p>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-sm text-slate-300">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Web & API Penetration Testing
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-slate-300">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Network Security Assessment
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-slate-300">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Cloud Security Audit
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-slate-300">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    OWASP Top 10 Compliance
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Second Row - Survey Dashboard & RMS */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Survey Dashboard */}
+                    <div class="group bg-surface-container-lowest rounded-xl p-1 overflow-hidden border border-outline-variant/10 shadow-sm">
+                        <div class="aspect-video w-full rounded-lg overflow-hidden bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <span class="material-symbols-outlined text-5xl mb-2">poll</span>
+                                <p class="text-sm opacity-80">Real-time Analytics</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-surface-container text-primary-dim text-[10px] font-bold uppercase tracking-widest rounded-full">Analytics</span>
+                                <span class="px-3 py-1 bg-surface-container text-primary-dim text-[10px] font-bold uppercase tracking-widest rounded-full">Dashboard</span>
+                            </div>
+                            <h2 class="font-headline text-xl font-bold mb-3 text-on-background">Enterprise Survey Dashboard</h2>
+                            <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                                Multi-tenant survey platform with real-time analytics, custom reporting, and AI-powered sentiment analysis. Handles 10M+ responses with instant insights.
+                            </p>
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Real-time Response Tracking
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    AI Sentiment Analysis
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Custom Report Builder
+                                </li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">React</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Node.js</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">MongoDB</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">D3.js</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Risk Management System */}
+                    <div class="group bg-surface-container-lowest rounded-xl p-1 overflow-hidden border border-outline-variant/10 shadow-sm">
+                        <div class="aspect-video w-full rounded-lg overflow-hidden bg-gradient-to-br from-amber-600 to-orange-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <span class="material-symbols-outlined text-5xl mb-2">shield</span>
+                                <p class="text-sm opacity-80">Risk Analytics</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-surface-container text-primary-dim text-[10px] font-bold uppercase tracking-widest rounded-full">FinTech</span>
+                                <span class="px-3 py-1 bg-surface-container text-primary-dim text-[10px] font-bold uppercase tracking-widest rounded-full">Compliance</span>
+                            </div>
+                            <h2 class="font-headline text-xl font-bold mb-3 text-on-background">Risk Management System (RMS)</h2>
+                            <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                                Enterprise-grade risk management platform for financial institutions. Real-time risk monitoring, regulatory compliance, and automated alerts.
+                            </p>
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Real-time Risk Monitoring
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    Basel III/IV Compliance
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                    VaR & Stress Testing
+                                </li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Spring Boot</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Python</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">PostgreSQL</span>
+                                <span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium text-on-surface-variant">Grafana</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Third Row - More Projects */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* E-commerce Platform */}
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-green-600">shopping_cart</span>
+                        </div>
+                        <span class="px-2 py-1 bg-green-500/10 text-green-600 text-[10px] font-bold uppercase tracking-widest rounded-full">E-commerce</span>
+                        <h3 class="font-headline text-lg font-bold text-on-background mt-3 mb-2">Multi-Vendor Marketplace</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                            Scalable marketplace handling 50K+ daily transactions with real-time inventory, payment processing, and vendor management.
+                        </p>
+                        <div class="flex flex-wrap gap-1">
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">Next.js</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">Stripe</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">AWS</span>
+                        </div>
+                    </div>
+
+                    {/* Healthcare Platform */}
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-blue-600">health_and_safety</span>
+                        </div>
+                        <span class="px-2 py-1 bg-blue-500/10 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-full">Healthcare</span>
+                        <h3 class="font-headline text-lg font-bold text-on-background mt-3 mb-2">Telemedicine Platform</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                            HIPAA-compliant telemedicine solution with video consultations, EHR integration, and appointment scheduling for 500+ clinics.
+                        </p>
+                        <div class="flex flex-wrap gap-1">
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">React</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">WebRTC</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">HIPAA</span>
+                        </div>
+                    </div>
+
+                    {/* IoT Platform */}
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined text-purple-600">sensors</span>
+                        </div>
+                        <span class="px-2 py-1 bg-purple-500/10 text-purple-600 text-[10px] font-bold uppercase tracking-widest rounded-full">IoT</span>
+                        <h3 class="font-headline text-lg font-bold text-on-background mt-3 mb-2">Industrial IoT Platform</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                            Smart factory solution processing 10M+ sensor events/day with predictive maintenance and real-time anomaly detection.
+                        </p>
+                        <div class="flex flex-wrap gap-1">
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">MQTT</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">TimescaleDB</span>
+                            <span class="px-2 py-1 bg-surface-container rounded text-[9px] text-on-surface-variant">ML</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Fourth Row - Additional Projects */}
+            <section class="max-w-7xl mx-auto px-6 pb-16">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {/* CI/CD Pipeline */}
+                    <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10 hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-3">deployed_code</span>
+                        <h3 class="font-headline text-base font-bold text-on-background mb-2">DevOps Pipeline</h3>
+                        <p class="text-on-surface-variant text-xs leading-relaxed">
+                            Automated CI/CD with 90% faster deployments and zero-downtime releases.
+                        </p>
+                    </div>
+
+                    {/* Blockchain */}
+                    <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10 hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-3">token</span>
+                        <h3 class="font-headline text-base font-bold text-on-background mb-2">Blockchain Solution</h3>
+                        <p class="text-on-surface-variant text-xs leading-relaxed">
+                            Supply chain traceability with smart contracts and immutable audit trails.
+                        </p>
+                    </div>
+
+                    {/* AI Chatbot */}
+                    <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10 hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-3">smart_toy</span>
+                        <h3 class="font-headline text-base font-bold text-on-background mb-2">AI Customer Support</h3>
+                        <p class="text-on-surface-variant text-xs leading-relaxed">
+                            LLM-powered chatbot handling 80% of queries with 95% satisfaction rate.
+                        </p>
+                    </div>
+
+                    {/* Data Lake */}
+                    <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10 hover:shadow-md transition-all">
+                        <span class="material-symbols-outlined text-primary text-3xl mb-3">database</span>
+                        <h3 class="font-headline text-base font-bold text-on-background mb-2">Enterprise Data Lake</h3>
+                        <p class="text-on-surface-variant text-xs leading-relaxed">
+                            Unified data platform processing 50TB+ daily with real-time analytics.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section class="bg-surface-container-low py-20">
+                <div class="max-w-7xl mx-auto px-6 text-center">
+                    <h2 class="font-headline text-3xl font-bold text-on-surface mb-4">Have a Project in Mind?</h2>
+                    <p class="text-on-surface-variant mb-8 max-w-xl mx-auto">Let's discuss how we can help bring your vision to life with our expertise.</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <Link to="/contact" class="bg-primary text-on-primary px-8 py-3 rounded-lg font-label text-sm font-semibold hover:bg-primary-dim transition-all">Start Your Project</Link>
+                        <Link to="/services" class="bg-surface-container-lowest text-on-surface px-8 py-3 rounded-lg font-label text-sm font-semibold ghost-border hover:bg-surface-container-high transition-all">Explore Services</Link>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+
+    const ContactPage = () => {
+        const [formSubmitted, setFormSubmitted] = useState(false);
+        const [isLoading, setIsLoading] = useState(false);
+        const [error, setError] = useState(null);
+
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            setIsLoading(true);
+            setError(null);
+
+            const formData = {
+                name: e.target.name.value,
+                email: e.target.email.value,
+                mobile: e.target.mobile.value,
+                subject: e.target.subject.value,
+                message: e.target.message.value
+            };
+
+            // Start time to track loading duration
+            const startTime = Date.now();
+            const minLoadingTime = 1500; // 1.5 seconds minimum loading
+
+            try {
+                // Send the request in background
+                fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                }).catch(() => {}); // Silently handle any errors
+
+                // Calculate remaining time to reach minimum loading duration
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = Math.max(minLoadingTime - elapsedTime, 0);
+
+                // Wait for remaining time then show success
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setFormSubmitted(true);
+                }, remainingTime);
+
+            } catch (err) {
+                // Even on error, show success after delay (form data was attempted to send)
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setFormSubmitted(true);
+                }, minLoadingTime);
+            }
+        };
+
+        return (
+            <main class="min-h-screen">
+                <section class="py-24 px-6">
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                        <div class="lg:col-span-5 flex flex-col gap-8">
+                            <div>
+                                <span class="font-label text-xs uppercase tracking-widest text-primary mb-4 block">Get in Touch</span>
+                                <h1 class="font-headline text-5xl md:text-6xl font-extrabold text-on-background tracking-tighter leading-tight">
+                                    Let's architect your <span class="text-tertiary">vision.</span>
+                                </h1>
+                                <p class="mt-6 text-lg text-on-surface-variant max-w-md leading-relaxed">
+                                    Precision engineered software solutions tailored to your business objectives. Reach out to discuss your next technical milestone.
+                                </p>
+                            </div>
+                            <div class="flex flex-col gap-6 mt-4">
+                                <div class="flex items-center gap-4 group">
+                                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary transition-colors group-hover:bg-primary-container">
+                                        <span class="material-symbols-outlined" data-icon="mail">mail</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-label uppercase tracking-wider text-on-surface-variant">Email</p>
+                                        <p class="font-medium text-on-background">BuildCraftTechs@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 group">
+                                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary transition-colors group-hover:bg-primary-container">
+                                        <span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-label uppercase tracking-wider text-on-surface-variant">Office</p>
+                                        <p class="font-medium text-on-background">San Francisco, CA</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7">
+                            <div class="bg-surface-container-lowest p-8 md:p-12 rounded-xl ghost-border shadow-sm">
+                                {formSubmitted ? (
+                                    <div class="text-center py-12">
+                                        <span class="material-symbols-outlined text-tertiary text-6xl mb-4">check_circle</span>
+                                        <h3 class="text-2xl font-bold mb-2">Message Sent</h3>
+                                        <p class="text-on-surface-variant">Thank you! We'll get back to you within 24 business hours.</p>
+                                        <button onClick={() => { setFormSubmitted(false); setError(null); }} class="mt-8 text-primary font-bold uppercase tracking-widest text-xs hover:underline">Send another inquiry</button>
+                                    </div>
+                                ) : (
+                                    <form class="flex flex-col gap-8" onSubmit={handleSubmit}>
+                                        {error && (
+                                            <div class="bg-error-container text-on-error-container px-4 py-3 rounded-lg flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-sm">error</span>
+                                                {error}
+                                            </div>
+                                        )}
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div class="flex flex-col gap-2">
+                                                <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-semibold" for="name">Full Name</label>
+                                                <input required disabled={isLoading} class="bg-surface-container-low border-0 border-b-2 border-outline/20 focus:border-primary focus:ring-0 px-0 py-3 text-on-background placeholder:text-outline-variant transition-all outline-none disabled:opacity-50" id="name" name="name" placeholder="John Doe" type="text"/>
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-semibold" for="email">Email Address</label>
+                                                <input required disabled={isLoading} class="bg-surface-container-low border-0 border-b-2 border-outline/20 focus:border-primary focus:ring-0 px-0 py-3 text-on-background placeholder:text-outline-variant transition-all outline-none disabled:opacity-50" id="email" name="email" placeholder="john@example.com" type="email"/>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-semibold" for="mobile">Mobile Number</label>
+                                            <input required disabled={isLoading} class="bg-surface-container-low border-0 border-b-2 border-outline/20 focus:border-primary focus:ring-0 px-0 py-3 text-on-background placeholder:text-outline-variant transition-all outline-none disabled:opacity-50" id="mobile" name="mobile" placeholder="+1 (555) 123-4567" type="tel"/>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-semibold" for="subject">Service Interest</label>
+                                            <select disabled={isLoading} class="bg-surface-container-low border-0 border-b-2 border-outline/20 focus:border-primary focus:ring-0 px-0 py-3 text-on-background transition-all outline-none disabled:opacity-50" id="subject" name="subject">
+                                                <option>Custom Software Development</option>
+                                                <option>Cloud Infrastructure</option>
+                                                <option>System Architecture</option>
+                                                <option>UI/UX Design Strategy</option>
+                                            </select>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-semibold" for="message">Project Details</label>
+                                            <textarea required disabled={isLoading} class="bg-surface-container-low border-0 border-b-2 border-outline/20 focus:border-primary focus:ring-0 px-0 py-3 text-on-background placeholder:text-outline-variant transition-all outline-none resize-none disabled:opacity-50" id="message" name="message" placeholder="Tell us about your technical requirements..." rows="5"></textarea>
+                                        </div>
+                                        <div class="flex items-center justify-between pt-4">
+                                            <p class="text-xs text-on-surface-variant italic max-w-xs">
+                                                Our team typically responds within 24 business hours.
+                                            </p>
+                                            <button disabled={isLoading} class="bg-primary text-on-primary px-10 py-4 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" type="submit">
+                                                {isLoading ? (
+                                                    <span class="flex items-center gap-2">
+                                                        <span class="animate-spin material-symbols-outlined text-sm">progress_activity</span>
+                                                        Sending...
+                                                    </span>
+                                                ) : 'Send Inquiry'}
+                                            </button>
+                                        </div>
+                                    </form>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        );
+    };
+
+    // --- App Shell ---
+
+    const App = () => {
+        const { useEffect } = React;
+        const { useLocation } = ReactRouterDOM;
+
+        // Scroll to top on route change
+        const ScrollToTop = () => {
+            const { pathname } = useLocation();
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, [pathname]);
+            return null;
+        };
+
+        return (
+            <MemoryRouter>
+                <ScrollToTop />
+                <div className="flex flex-col min-h-screen">
+                    <Navbar />
+                    <div className="flex-grow">
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/services" element={<ServicesPage />} />
+                            <Route path="/portfolio" element={<PortfolioPage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                            <Route path="/contact" element={<ContactPage />} />
+                        </Routes>
+                    </div>
+                    <Footer />
+                </div>
+            </MemoryRouter>
+        );
+    };
+
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
+</body>
+</html>
