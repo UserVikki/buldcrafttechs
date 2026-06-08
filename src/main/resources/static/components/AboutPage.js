@@ -1,4 +1,11 @@
-window.AboutPage = () => (
+window.AboutPage = () => {
+    React.useEffect(() => {
+        document.title = 'About Us | BuildCraftTechs';
+        document.querySelector('meta[name="description"]').content =
+            'Learn about BuildCraftTechs — a precision engineering team specializing in backend architecture, fintech systems, and scalable automation for high-growth startups.';
+        document.querySelector('link[rel="canonical"]').href = 'https://buildcrafttechs.com/about';
+    }, []);
+    return (
     <main>
         <section className="max-w-7xl mx-auto px-6 pt-24 pb-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
@@ -41,4 +48,5 @@ window.AboutPage = () => (
             </div>
         </section>
     </main>
-);
+    );
+};

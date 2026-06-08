@@ -16,7 +16,7 @@ window.App = () => {
     };
 
     return (
-        <ReactRouterDOM.MemoryRouter>
+        <ReactRouterDOM.BrowserRouter>
             <ScrollToTop />
             <div className="flex flex-col min-h-screen">
                 <Navbar />
@@ -31,7 +31,7 @@ window.App = () => {
                 </div>
                 <Footer />
             </div>
-        </ReactRouterDOM.MemoryRouter>
+        </ReactRouterDOM.BrowserRouter>
     );
 };
 

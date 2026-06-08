@@ -4,6 +4,44 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>BuildCraftTechs | Precision Engineered Software Architecture</title>
+    <meta name="description" content="BuildCraftTechs builds high-performance software — scalable backends, microservices, cloud infrastructure, and automation solutions for startups and businesses."/>
+    <meta name="keywords" content="software development, backend development, microservices, cloud infrastructure, automation, software architecture, startup technology"/>
+    <meta name="robots" content="index, follow"/>
+    <link rel="canonical" href="https://buildcrafttechs.com/"/>
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://buildcrafttechs.com/"/>
+    <meta property="og:title" content="BuildCraftTechs | Precision Engineered Software Architecture"/>
+    <meta property="og:description" content="We build high-performance software — scalable backends, microservices, cloud infrastructure, and automation solutions. Fast execution. Clean architecture."/>
+    <meta property="og:image" content="https://buildcrafttechs.com/og-image.png"/>
+    <meta property="og:site_name" content="BuildCraftTechs"/>
+    <meta property="og:locale" content="en_US"/>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="BuildCraftTechs | Precision Engineered Software Architecture"/>
+    <meta name="twitter:description" content="We build high-performance software — scalable backends, microservices, cloud infrastructure, and automation solutions."/>
+    <meta name="twitter:image" content="https://buildcrafttechs.com/og-image.png"/>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BuildCraftTechs",
+      "url": "https://buildcrafttechs.com",
+      "logo": "https://buildcrafttechs.com/og-image.png",
+      "description": "BuildCraftTechs builds high-performance software — scalable backends, microservices, cloud infrastructure, and automation solutions for startups and businesses.",
+      "email": "buildcrafttechs@gmail.com",
+      "sameAs": [],
+      "offers": {
+        "@type": "Offer",
+        "description": "Custom software development, backend systems, cloud infrastructure, and automation solutions"
+      }
+    }
+    </script>
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2310B981'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Manrope,sans-serif' font-weight='800' font-size='18' fill='%23000'>B</text></svg>"/>
 
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -121,13 +159,13 @@
 <script>
     async function loadComponents() {
         const files = [
-            'components/Navbar.js','components/Footer.js','components/HomePage.js',
-            'components/ServicesPage.js','components/PortfolioPage.js',
-            'components/AboutPage.js','components/ContactPage.js','components/App.js'
+            '/components/Navbar.js','/components/Footer.js','/components/HomePage.js',
+            '/components/ServicesPage.js','/components/PortfolioPage.js',
+            '/components/AboutPage.js','/components/ContactPage.js','/components/App.js'
         ];
         for (const file of files) {
             try {
-                const code = await (await fetch(file)).text();
+                const code = await (await fetch(file, { cache: 'no-store' })).text();
                 eval(Babel.transform(code, { presets: ['react'] }).code);
             } catch (e) { console.error('Error loading ' + file + ':', e); }
         }

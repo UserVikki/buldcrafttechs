@@ -1,5 +1,19 @@
 window.ContactPage = () => {
+    React.useEffect(() => {
+        document.title = 'Contact Us | BuildCraftTechs';
+        document.querySelector('meta[name="description"]').content =
+            'Get in touch with BuildCraftTechs to discuss your project — backend systems, automation, or custom software development.';
+        document.querySelector('link[rel="canonical"]').href = 'https://buildcrafttechs.com/contact';
+    }, []);
     const location = ReactRouterDOM.useLocation();
+    const SERVICES = [
+        'Survey Tool',
+        'Mobile Food Delivery Platform',
+        'E-commerce Online Store',
+        'AI Agent',
+        'Hire a Developer',
+        'Others'
+    ];
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const [service, setService] = React.useState((location.state && location.state.service) || '');
@@ -83,10 +97,12 @@ window.ContactPage = () => {
                                             className={inputClass + " appearance-none cursor-pointer"}
                                             style={{borderColor: 'var(--c-border)', color: 'var(--c-text)', background: 'var(--c-bg)'}}>
                                             <option value="" disabled>Select a service</option>
-                                            <option value="Survey Tool">Survey Tool</option>
-                                            <option value="AI Agent">AI Agent</option>
-                                            <option value="Hire a Developer">Hire a Developer</option>
-                                            <option value="Others">Others</option>
+                                            {service && !SERVICES.includes(service) && (
+                                                <option value={service}>{service}</option>
+                                            )}
+                                            {SERVICES.map(function(s) {
+                                                return <option key={s} value={s}>{s}</option>;
+                                            })}
                                         </select>
                                         <span className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-base" style={{color: 'var(--c-text-muted)'}}>expand_more</span>
                                     </div>

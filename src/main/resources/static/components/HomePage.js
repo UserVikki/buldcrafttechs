@@ -1,4 +1,11 @@
-window.HomePage = () => (
+window.HomePage = () => {
+    React.useEffect(() => {
+        document.title = 'BuildCraftTechs | Precision Engineered Software Architecture';
+        document.querySelector('meta[name="description"]').content =
+            'BuildCraftTechs builds high-performance software — scalable backends, microservices, cloud infrastructure, and automation solutions for startups and businesses.';
+        document.querySelector('link[rel="canonical"]').href = 'https://buildcrafttechs.com/';
+    }, []);
+    return (
     <main>
         {/* Hero */}
         <section className="relative overflow-hidden pt-24 pb-36 md:pt-36 md:pb-52">
@@ -86,4 +93,5 @@ window.HomePage = () => (
             </div>
         </section>
     </main>
-);
+    );
+};

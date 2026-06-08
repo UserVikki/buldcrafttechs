@@ -1,4 +1,10 @@
 window.PortfolioPage = () => {
+    React.useEffect(() => {
+        document.title = 'Portfolio | BuildCraftTechs';
+        document.querySelector('meta[name="description"]').content =
+            'Explore BuildCraftTechs projects — real-world software systems, backend platforms, and automation tools built for scale.';
+        document.querySelector('link[rel="canonical"]').href = 'https://buildcrafttechs.com/portfolio';
+    }, []);
     var A    = 'var(--c-accent)';
     var T    = 'var(--c-text)';
     var TS   = 'var(--c-text-sub)';
